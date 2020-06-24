@@ -28,8 +28,18 @@ var (
 )
 
 func main() {
-	flag.StringVar(&listenAddr, "listen-addr", ":5000", "server listen address")
+
 	flag.Parse()
+
+	argsWithPort := os.Args
+	
+    if len(argsWithPort) < 2 {
+        flag.StringVar(&listenAddr, "listen-addr", ":5000", "server listen address")
+    } else {
+        flag.StringVar(&listenAddr, "listen-addr", os.Args[1], "server listen address")
+    }
+
+    flag.Parse()
 
 	logger := log.New(os.Stdout, "http: ", log.LstdFlags)
 
